@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="fr.unice.ent.eve.modele.groupes.Personne" table="Personne">
+        <id name="id" type="long" column="id">
+            <generator class="increment" />
+        </id>
+        <property name="valeurUid">
+            <column name="valeurUid" />
+        </property>
+        <set name="permissions" inverse="true" cascade="all">
+            <key column="idPersonne" on-delete="cascade"/>
+            <one-to-many class="fr.unice.ent.eve.modele.groupes.Permission" />
+        </set>
+    </class>
+</hibernate-mapping>

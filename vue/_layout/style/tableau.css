@@ -1,0 +1,17 @@
+.colonneGauche        {float:left;width:220px;padding-left:30px;padding-top:5px;height:20px;background-image:url('../imgs/colonneGauche.png');}
+.colonne              {float:left;width:250px;padding-left:00px;padding-top:5px;height:20px;background-image:url('../imgs/colonne.png');}
+.colonneDroite        {float:left;width:300px;padding-left:00px;padding-top:5px;height:20px;background-image:url('../imgs/colonneDroite.png');background-position:300px 0px;}
+
+.finLigne             {margin-left:10px;height:25px;}
+
+.colonneGaucheEntete  {float:left;width:220px;padding-left:30px;padding-top:20px;height:30px;background-image:url('../imgs/colonneGaucheEntete.png');}
+.colonneEntete        {float:left;width:250px;padding-left:00px;padding-top:20px;height:30px;background-image:url('../imgs/colonneEntete.png');}
+.colonneDroiteEntete  {float:left;width:300px;padding-left:00px;padding-top:20px;height:30px;background-image:url('../imgs/colonneDroiteEntete.png');background-position:300px 0px;}
+
+.finLigneEntete       {margin-left:10px;height:50px;}
+
+.colonneGaucheBas     {float:left;width:220px;padding-left:30px;padding-top:20px;height:30px;background-image:url('../imgs/colonneGaucheBas.png');}
+.colonneBas           {float:left;width:220px;padding-left:30px;padding-top:20px;height:30px;background-image:url('../imgs/colonneBas.png');}
+.colonneDroiteBas     {float:left;width:270px;padding-left:30px;padding-top:20px;height:30px;background-image:url('../imgs/colonneDroiteBas.png');background-position:300px 0px;}
+
+.finLigneBas          {margin-left:10px;height:50px;margin-bottom:50px;}

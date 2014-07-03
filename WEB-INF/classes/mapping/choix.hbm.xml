@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="fr.unice.ent.eve.modele.questions.Choix" table="Choix">
+        <id name="id" type="long" column="id">
+            <generator class="increment" />
+        </id>
+        <property name="idQuestion">
+            <column name="idQuestion" />
+        </property>
+        <property name="numChoix">
+            <column name="numChoix" />
+        </property>
+        <set name="reponses" inverse="true">
+            <key column="idChoix"/>
+            <one-to-many class="fr.unice.ent.eve.modele.reponses.Reponse" />
+        </set>
+        <many-to-one name="question" column="idQuestion" insert="false" update="false" class="fr.unice.ent.eve.modele.questions.Question" />
+        <property name="nomChoix">
+            <column name="nomChoix" />
+        </property>
+        <property name="valeur">
+            <column name="valeur" />
+        </property>
+    </class>
+</hibernate-mapping>

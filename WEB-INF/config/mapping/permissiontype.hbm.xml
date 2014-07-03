@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="fr.unice.ent.eve.modele.groupes.PermissionType" table="PermissionType">
+        <id name="idPermission" column="idPermission">
+            <generator class="increment" />
+        </id>
+        <property name="nomPermission">
+            <column name="nomPermission" />
+        </property>
+        <property name="description">
+            <column name="description" />
+        </property>
+        <set name="permissions" inverse="true" cascade="all">
+            <key column="naturePermission" on-delete="cascade"/>
+            <one-to-many class="fr.unice.ent.eve.modele.groupes.Permission" />
+        </set>
+        <set name="cope" inverse="true" cascade="all">
+            <key column="idPermission" on-delete="cascade"/>
+            <one-to-many class="fr.unice.ent.eve.modele.commandes.CommandePermission" />
+        </set>
+    </class>
+</hibernate-mapping>

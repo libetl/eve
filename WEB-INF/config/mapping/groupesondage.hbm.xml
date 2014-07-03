@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="fr.unice.ent.eve.modele.sondages.GroupeSondage" table="GroupeSondage">
+        <composite-id>
+            <key-property name="idGroupe" column="idGroupe" type="long" />
+            <key-property name="idSondage" column="idSondage" type="long" />
+        </composite-id>
+        <many-to-one name="g" column="idGroupe" insert="false" update="false" not-null="true" class="fr.unice.ent.eve.modele.groupes.Groupe" />
+        <many-to-one name="s" column="idSondage" insert="false" update="false" not-null="true" class="fr.unice.ent.eve.modele.sondages.Sondage" />
+    </class>
+</hibernate-mapping>

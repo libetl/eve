@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="fr.unice.ent.eve.modele.questions.Question" table="Question">
+        <id name="id" type="long" column="id">
+            <generator class="increment" />
+        </id>
+        <property name="titre">
+            <column name="titre" />
+        </property>
+        <property name="idType">
+            <column name="type" />
+        </property>
+        <property name="ordre">
+            <column name="ordre" />
+        </property>
+        <property name="obligatoire">
+            <column name="obligatoire" />
+        </property>
+        <set name="choix" inverse="true" cascade="all">
+            <key column="idQuestion" on-delete="cascade"/>
+            <one-to-many class="fr.unice.ent.eve.modele.questions.Choix" />
+        </set>
+        <set name="questionSondage" inverse="true">
+            <key column="idQuestion"/>
+            <one-to-many class="fr.unice.ent.eve.modele.sondages.QuestionSondage" />
+        </set>
+        <many-to-one name="type" column="type" insert="false" update="false" class="fr.unice.ent.eve.modele.questions.QuestionType" />
+    </class>
+</hibernate-mapping>

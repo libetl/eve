@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+    <description>
+      Application EVE.
+    </description>
+    <display-name>Application EVE</display-name>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!--              Configuration of the Stripes Filter.                   -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <filter>
+        <description>
+            Provides essential configuration and request processing services
+            for the Stripes framework.
+        </description>
+        <display-name>Stripes Filter</display-name>
+        <filter-name>StripesFilter</filter-name>
+        <filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
+
+        <!-- Optional init parameters for the Stripes Filter. -->
+        <init-param>
+            <param-name>ActionResolver.Class</param-name>
+            <param-value>fr.unice.ent.eve.controle.actionresolver.EveActionResolver</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ActionResolver.UrlFilters</param-name>
+            <param-value>WEB-INF/classes</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ActionResolver.PackageFilters</param-name>
+            <param-value>fr.unice.ent.eve.*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ExceptionHandler.Class</param-name>
+            <param-value>fr.unice.ent.eve.controle.exceptions.ExceptionHandler</param-value>
+        </init-param>
+        <init-param>
+            <param-name>LocalePicker.Locales</param-name>
+            <param-value>fr_FR</param-value>
+        </init-param>
+        <init-param>
+            <param-name>LocalizationBundleFactory.ErrorMessageBundle</param-name>
+            <param-value>StripesResources</param-value>
+        </init-param>
+        <init-param>
+            <param-name>LocalizationBundleFactory.FieldNameBundle</param-name>
+            <param-value>StripesResources</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>StripesFilter</filter-name>
+        <url-pattern>/essais/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>StripesFilter</filter-name>
+        <url-pattern>/vue/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>StripesFilter</filter-name>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!--         Configuration of the Stripes dispatcher Servlet.            -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+    <servlet>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <servlet-class>net.sourceforge.stripes.controller.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+       <servlet-name>AxisServlet</servlet-name> 
+       <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class> 
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <url-pattern>/controleurs/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+       <servlet-name>AxisServlet</servlet-name> 
+       <url-pattern>/services/*</url-pattern> 
+    </servlet-mapping>
+
+    <error-page> 
+       <error-code>404</error-code> 
+       <location>/</location> 
+    </error-page> 
+    <error-page> 
+       <error-code>500</error-code> 
+       <location>/vue/jsp/erreur/erreurInterne.jsp</location> 
+    </error-page> 
+
+</web-app>

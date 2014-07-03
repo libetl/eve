@@ -1,0 +1,85 @@
+label {
+ display:block;
+}
+
+input[type=text] {
+ width:400px;
+}
+
+.champ {
+ width:300px;
+}
+
+.colonneGauche {
+ width:300px;
+ height:50px;
+}
+
+.colonneGauche p {
+ width:300px;
+ height:37px;
+ overflow:auto;
+}
+
+.colonne {
+ width:300px;
+ height:50px;
+}
+
+.colonne p {
+ width:300px;
+ height:37px;
+ overflow:auto;
+}
+
+.colonneDroite {
+ width:125px;
+ height:50px;
+ background-position:-375px 0px;
+}
+
+.finLigne {
+ height:50px;
+}
+
+.colonneGaucheEntete {
+ width:300px;
+}
+
+.colonneEntete {
+ width:300px;
+ background-position:-105px 0px;
+}
+
+.colonneDroiteEntete {
+ width:125px;
+ background-position:-375px 0px;
+}
+
+.colonneGaucheBas {
+ width:375px;
+}
+
+.colonneBas {
+ width:20px;
+ background-position:-105px 0px;
+}
+
+form {
+ display:inline;
+}
+
+#sgPatienter
+{
+ display:none;
+}
+
+#casPatienter
+{
+ display:none;
+}
+
+#smtpPatienter
+{
+ display:none;
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="fr.unice.ent.eve.modele.groupes.Groupe" table="Groupe">
+        <id name="id" type="long" column="id">
+            <generator class="increment" />
+        </id>
+        <property name="nom">
+            <column name="nom" />
+        </property>
+        <many-to-one name="contrainte" column="contrainte" not-null="true" class="fr.unice.ent.eve.modele.groupes.GroupeContrainte" />
+        <set name="permissions" inverse="true" cascade="all">
+            <key column="idGroupe" on-delete="cascade"/>
+            <one-to-many class="fr.unice.ent.eve.modele.groupes.Permission" />
+        </set>
+        <set name="gs" inverse="true" cascade="all">
+            <key column="idGroupe" on-delete="cascade"/>
+            <one-to-many class="fr.unice.ent.eve.modele.sondages.GroupeSondage" />
+        </set>
+    </class>
+</hibernate-mapping>

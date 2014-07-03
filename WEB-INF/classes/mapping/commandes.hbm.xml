@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="fr.unice.ent.eve.modele.commandes.Commandes" table="Commandes">
+        <id name="idCommande" column="idCommande">
+            <generator class="increment" />
+        </id>
+        <property name="commande">
+            <column name="commande" />
+        </property>
+        <property name="description">
+            <column name="description" />
+        </property>
+        <property name="niveau">
+            <column name="niveau" />
+        </property>
+        <property name="idPartie">
+            <column name="idPartie" />
+        </property>
+        <many-to-one name="partie" column="idPartie" insert="false" update="false" not-null="true" class="fr.unice.ent.eve.modele.commandes.SitePartie" />
+        <set name="contraintes" inverse="true">
+            <key column="idCommande" />
+            <one-to-many class="fr.unice.ent.eve.modele.commandes.ContrainteCommande" />
+        </set>
+        <set name="cope" inverse="true" cascade="all">
+            <key column="idCommande" on-delete="cascade"/>
+            <one-to-many class="fr.unice.ent.eve.modele.commandes.CommandePermission" />
+        </set>
+    </class>
+</hibernate-mapping>

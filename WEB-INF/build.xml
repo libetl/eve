@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+	<!DOCTYPE project [
+	       <!ENTITY common SYSTEM "common.xml">
+	]>
+  <project default="init" name="Eve" basedir=".">
+  <property name="nom_classe" value=""/>
+  <property name="dos_java" value="src/"/>
+  <property name="dos_prop" value="config/"/>
+  <property name="dos_clas" value="classes/"/>
+  <property name="libs" value="lib"/>
+  <description>
+    Projet EVE.
+  </description>
+  <target name="prepare" description="Creation des dossiers">
+    <mkdir dir="${dos_java}"/>
+    <mkdir dir="${dos_prop}"/>
+    <mkdir dir="${dos_clas}"/>
+    <echo message="Dossiers crees"/>
+  </target>
+
+  <target description="Copier les proprietes dans le classpath" name="configure" depends="prepare">
+    <copy todir="${dos_clas}">
+      <fileset dir="${dos_prop}">
+      </fileset>
+    </copy>
+    <echo message="Proprietes recopiees"/>
+  </target>
+
+  <target name="compile" description="Compiler" depends="prepare">
+    <javac srcdir="${dos_java}" destdir="${dos_clas}" executable="${dos_clas}">
+      <classpath>
+        <fileset dir="${libs}">
+          <include name="*.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+    <echo message="Application compilee"/>
+  </target>
+
+  <target name="clean" description="RAZ .class">
+    <delete dir="classes"/>
+    <echo message="Fichiers binaires supprimes. L'application ne peut plus etre lancee."/>
+  </target>
+
+  <target name="demarre" description="Lancer" depends="compile, configure">
+    <echo message="Application lancee."/>
+  </target>
+
+  <target name="package" description="Compresser dans un war" depends="init">
+    <war webxml="web.xml" destfile="../../eve.war" basedir="../">
+      <manifest>
+        <attribute name="Built-By" value="Projet EVE."/>
+      </manifest>
+    </war>
+    <echo message="Application compressee dans un fichier .war ."/>
+  </target>
+
+  <target name="compresser" description="Compresser dans une archive .tar.gz" depends="clean, prepare, configure">
+    <tar destfile="../../eve.tar.gz" basedir="../../" compression="gzip"/>
+    <echo message="Application compressee dans un fichier .tar.gz ."/>
+  </target>
+
+  <target name="javadoc">
+    <javadoc access="public" author="true" destdir="../vue/doc" 
+     doctitle="Javadoc Eve" nodeprecated="false" nodeprecatedlist="false" 
+     noindex="false" nonavbar="false" notree="false" packagenames="fr.unice.ent.eve.*" 
+     source="1.5" sourcepath="src" splitindex="true" use="true" version="true"
+     stylesheetfile="../vue/doc/javadoc2.css" Windowtitle="Javadoc Eve">
+      <classpath>
+        <fileset dir="${libs}">
+          <include name="*.jar"/>
+        </fileset>
+      </classpath>
+      <link href="http://stripes.sourceforge.net/docs/current/javadoc/"/>
+      <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+      <link href="http://ws.apache.org/axis/java/apiDocs/"/>
+      <link href="http://www.hibernate.org/hib_docs/v3/api/"/>
+    </javadoc>
+  </target>
+
+  <target name="init" depends="demarre">
+    <echo message="Fin de la cible init."/>
+  </target>
+
+</project>

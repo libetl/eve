@@ -1,0 +1,34 @@
+#titreQuestionG
+{
+  background-image:url('../imgs/titrequestiong.png');
+  float:left;
+  height:61px;
+  width:18px;
+  margin-top:30px;
+  margin-bottom:20px;
+}
+
+#titreQuestion
+{
+  background-image:url('../imgs/titrequestion.png');
+  float:left;
+  height:42px;
+  padding-top:20px;
+  margin-top:30px;
+  margin-bottom:20px;
+}
+
+#titreQuestionD
+{
+  background-image:url('../imgs/titrequestiond.png');
+  float:left;
+  height:61px;
+  width:18px;
+  margin-top:30px;
+  margin-bottom:20px;
+}
+
+.bourrage
+{
+  margin-bottom:120px;
+}

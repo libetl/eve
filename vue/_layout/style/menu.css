@@ -1,0 +1,39 @@
+#menuAdminHG
+{
+ float:left;
+ padding-top:20px;
+ background-image:url('../imgs/menuAdminHG.png');
+ height:30px;
+ width:200px;
+}
+
+.menuAdminH
+{
+ float:left;
+ padding-top:20px;
+ background-image:url('../imgs/menuAdminH.png');
+ height:30px;
+ width:200px;
+}
+
+#menuAdminHD
+{
+ float:left;
+ padding-top:20px;
+ background-image:url('../imgs/menuAdminHD.png');
+ height:30px;
+ width:200px;
+}
+
+#conteneurMenuAdmin
+{
+ display:block;
+ height:50px;
+ min-width:800px;
+ text-align: center ; 
+}
+
+fieldset
+{
+ width:778px;
+}
