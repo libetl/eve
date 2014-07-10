@@ -1,5 +1,6 @@
 package fr.unice.ent.eve.modele;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -23,8 +24,13 @@ import fr.unice.ent.eve.modele.config.EveConfig;
  * @author benychou
  * 
  */
-public class Modele<T> implements java.lang.Comparable<Modele<T>>, Cloneable {
+public class Modele<T> implements java.lang.Comparable<Modele<T>>, Cloneable, Serializable {
   /**
+	 * 
+	 */
+    private static final long serialVersionUID = 5815838653239395715L;
+
+/**
    * Cette methode regarde si la derniere reinitialisation de la base de donnees
    * a bien fonctionne. Pour cela, elle regarde si la table EveConfig est vide
    * ou non.
@@ -43,9 +49,19 @@ public class Modele<T> implements java.lang.Comparable<Modele<T>>, Cloneable {
     return taille > 0;
   }
 
-  private GerantTransactions gT;
+  private transient GerantTransactions gT;
 
-  /**
+  private String objectId;
+  
+  public final String getObjectId () {
+	return objectId;
+  }
+
+  public final void setObjectId (String objectId) {
+	this.objectId = objectId;
+  }
+
+/**
    * Constructeur vide
    */
   public Modele () {
@@ -144,7 +160,10 @@ public class Modele<T> implements java.lang.Comparable<Modele<T>>, Cloneable {
    * @return l'objet pouvant etre compare
    */
   public Object getComparableId () {
-    return new Long (this.hashCode ());
+	  if (Session.HIBERNATE_AND_NOT_MONGO){
+        return new Long (this.hashCode ());
+	  }
+	  return this.getObjectId ();
   }
 
   /**
@@ -200,7 +219,7 @@ public class Modele<T> implements java.lang.Comparable<Modele<T>>, Cloneable {
    */
   public List<T> requete () {
     final HashMap<String, String> defaut = new HashMap<String, String> ();
-    return this.requete (this.getClass ().getSimpleName (), defaut);
+    return this.requete (this.getClass (), defaut);
   }
 
   /**
@@ -211,10 +230,13 @@ public class Modele<T> implements java.lang.Comparable<Modele<T>>, Cloneable {
    * @return la liste-resultat des tuples correspondant
    */
   public List<T> requete (final Map<String, String> h) {
-    return this.requete (this.getClass ().getSimpleName (), h);
+    return this.requete (this.getClass (), h);
   }
 
-  protected List<T> requete (final String tables, final Map<String, String> h) {
+  @SuppressWarnings ("unchecked")
+protected List<T> requete (final Class<?> c, final Map<String, String> h) {
+	  List<T> l = null; 
+	  if (Session.HIBERNATE_AND_NOT_MONGO){
     String hSt = ""; //$NON-NLS-1$
     if (h.size () > 0) {
       hSt += " where "; //$NON-NLS-1$
@@ -228,8 +250,32 @@ public class Modele<T> implements java.lang.Comparable<Modele<T>>, Cloneable {
       }
     }
     this.gT.ouvrir ();
-    @SuppressWarnings ("unchecked")
-    final List<T> l = (List<T>) this.gT.requete ("from " + tables + hSt); //$NON-NLS-1$
+    l = (List<T>) this.gT.requete (c, hSt); //$NON-NLS-1$
+	  }else{
+		    String hSt = ""; //$NON-NLS-1$
+		    if (h.size () > 1) {
+		      hSt += "{$and : {"; //$NON-NLS-1$
+		    }else if (h.size () == 1){
+		    	hSt += "{";
+		    }
+
+		    for (final Iterator<String> it = h.keySet ().iterator () ; it.hasNext () ;) {
+		      final String s = it.next ();
+		      hSt += "\"" + s + "\" : \"" + h.get (s) + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+		      if (it.hasNext ()) {
+		        hSt += ", "; //$NON-NLS-1$
+		      }
+		    }
+		    if (h.size () > 1){
+		      hSt += "}}";
+		    }else if (h.size () == 1){
+		    	hSt += "}";
+		    }else{
+		    	hSt = "{}";
+		    }
+		    this.gT.ouvrir ();
+		    l = (List<T>) this.gT.requete (c, hSt); //$NON-NLS-1$
+	  }
     return l;
   }
 

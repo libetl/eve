@@ -61,10 +61,11 @@ public class GerantTransactions {
    * @param o
    *          l'objet du modele
    */
-  public void ajout (final Object o) {
+  public Object ajout (final Object o) {
     final Transaction tx = this.session.beginTransaction ();
-    this.session.save (o);
+    Object ret = this.session.save (o);
     tx.commit ();
+    return ret;
   }
 
   /**
@@ -183,9 +184,9 @@ public class GerantTransactions {
    * @return une Liste d'objets correspondant a la requete
    */
   @SuppressWarnings ({ "unchecked", "rawtypes" })
-  public List<? extends Modele> requete (final String phrase) {
-    final List<Modele> l = (List<Modele>) this.session.createQuery (phrase)
-        .list ();
+  public List<? extends Modele> requete (final Class<?> c, final String conditions) {
+    final List<Modele> l = (List<Modele>) this.session.createQuery (c, conditions)
+        .list (c);
     Collections.sort (l);
     return l;
 
